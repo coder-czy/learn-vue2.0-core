@@ -20,7 +20,7 @@ let methods = [
 methods.forEach(item => {
   // debugger
   ArrayMethods[item] = function (...args) {
-    console.log('劫持数组')
+    // console.log('劫持数组')
     let result = oldArrayProtoMethods[item].apply(this, args)
 
     // 数组添加数据的情况

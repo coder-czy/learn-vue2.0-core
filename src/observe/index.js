@@ -49,11 +49,11 @@ function defineReactive (data, key, value) {
   observer(value) //递归 深度代理
   Object.defineProperty(data, key, {
     get: () => {
-      console.log('获取')
+      // console.log('获取')
       return value
     },
     set: (newValue) => {
-      console.log('设置')
+      // console.log('设置')
       if (newValue == value) return
       value = newValue
       // 设置值的时候
