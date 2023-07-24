@@ -62,7 +62,7 @@ function gen (node) { //1 元素  2 3
     if (lastIndex < text.length) {
       tokens.push(JSON.stringify(text.slice(lastIndex)))
     }
-    return `_v(${tokens.join('+')})`
+    return `_v(${tokens.join("+")})`
   }
 }
 
@@ -71,7 +71,7 @@ export function generate (el) {//ast
   let children = genChildren(el)
   // console.log(children)
   //_c:元素标签 _v:文本 _s:插值表达式
-  let code = `_c(${el.tag},${el.attrs.length ? `${genProps(el.attrs)}` : 'undefined'}${children ? `,${children}` : ''})`
+  let code = `_c('${el.tag}',${el.attrs.length ? `${genProps(el.attrs)}` : 'undefined'}${children ? `,${children}` : ''})`
   console.log(code)
   // _c(div,{id:"app",style:{"color":"red","font-size":"20px"}})
   return code

@@ -1,5 +1,6 @@
 import { initState } from "./state"
 import { compileToFunction } from "./compile/index"
+import { mountComponent } from "./lifecycle"
 
 export function initMixin (Vue) {//给vue添加init方法
   Vue.prototype._init = function (options) {//用于初始化操作
@@ -21,6 +22,7 @@ export function initMixin (Vue) {//给vue添加init方法
     let vm = this
     // 获取元素
     el = document.querySelector(el)
+    vm.$el = el //保存旧的dom
     let options = vm.$options
     if (!options.render) {
       let template = options.template
@@ -30,10 +32,16 @@ export function initMixin (Vue) {//给vue添加init方法
         //<div id="app">hello {{name}}</div>
 
         // 变成ast语法树
-        let ast = compileToFunction(el)
+        // let ast = compileToFunction(el)
+
+        //将render 函数变成 vnode
+        let render = compileToFunction(el)
+        console.log(render)
+        //1.将render函数变成vnode 2.vnode变成真实dom放到页面上去
+        options.render = render
       }
     }
-
+    mountComponent(vm, el)
   }
 }
 
