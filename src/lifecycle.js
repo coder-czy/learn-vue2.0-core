@@ -1,7 +1,9 @@
 import { patch } from './vnode/patch'
 export function mountComponent (vm, el) {
   //源码
+  callHook(vm, 'beforeMounted')
   vm._update(vm._render())//1.vm._render 将render函数变成vnode  2。vm._update 将vnode 变成真实dom
+  callHook(vm, 'mounted')
 }
 
 export function lifecycleMixin (Vue) {
@@ -13,3 +15,13 @@ export function lifecycleMixin (Vue) {
 }
 
 //1.render()函数=》vnode=>真实dom
+
+//生命周期调用
+export function callHook (vm, hook) {
+  const handlers = vm.$options[hook]
+  if (handlers) {
+    for (let i = 0; i < handlers.length; i++) {
+      handlers[i].call(this)//改变生命周期中的this指向
+    }
+  }
+}

@@ -1,13 +1,16 @@
 import { initState } from "./state"
 import { compileToFunction } from "./compile/index"
-import { mountComponent } from "./lifecycle"
+import { callHook, mountComponent } from "./lifecycle"
+import { mergeOptions } from "./utils/index"
 
 export function initMixin (Vue) {//给vue添加init方法
   Vue.prototype._init = function (options) {//用于初始化操作
     const vm = this
-    vm.$options = options
-
+    vm.$options = mergeOptions(Vue.options, options)
+    callHook(vm, 'beforeCreated')
+    // 初始化状态
     initState(vm)
+    callHook(vm, 'created')
 
     // 渲染模板 el
     if (vm.$options.el) {
