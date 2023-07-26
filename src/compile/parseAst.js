@@ -52,7 +52,7 @@ function start (tag, attrs) {
 // 获取文本
 function charts (text) {
   // console.log(text)
-  text = text.replace(/a/g)
+  // text = text.replace(/a/g, '')
   if (text) {
     createParent.children.push({
       type: 3,

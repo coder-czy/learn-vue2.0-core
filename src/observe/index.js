@@ -1,4 +1,5 @@
 import { ArrayMethods } from './arr'
+import Dep from './dep'
 export function observer (data,) {
   // 判断
   if (typeof data != 'object' || data == null) {
@@ -14,8 +15,10 @@ class Observer {
     // 给data定义一个属性 __ob__,用于数组新增对象数据的处理
     Object.defineProperty(data, '__ob__', {
       enumerable: false,
+      configurable: true,
       value: this
     })
+    this.dep = new Dep()//给所有对象类型添加一个dep
 
     //判断数组
     if (Array.isArray(data)) {
@@ -46,18 +49,29 @@ class Observer {
 
 // 对象中的属性进行劫持
 function defineReactive (data, key, value) {
-  observer(value) //递归 深度代理
+  let childDep = observer(value) //递归 深度代理
+  let dep = new Dep() //给每一属性添加dep
   Object.defineProperty(data, key, {
     get: () => {
+      // 收集依赖
+      if (Dep.target) {
+        dep.depend()
+        if (childDep.dep) {
+          childDep.dep.depend()//数组收集
+        }
+      }
       // console.log('获取')
       return value
     },
     set: (newValue) => {
       // console.log('设置')
       if (newValue == value) return
-      value = newValue
-      // 设置值的时候
+      // 设置值为对象的时候
       observer(value)
+      value = newValue
+      // 更新
+      dep.notify()
+
     }
   })
 }
