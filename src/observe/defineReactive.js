@@ -9,6 +9,7 @@ export default function defineReactive (data, key, value) {
     configurable: true,
     enumerable: true,
     get () {
+      console.log(`获取值${key}:${value}`)
       return value
     },
     set (newValue) {

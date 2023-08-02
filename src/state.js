@@ -1,13 +1,13 @@
 import { observe } from './observe/observe'
 
 export function initState (vm) {
+
   initData(vm)
-  console.log(vm)
 
 }
 
 function initData (vm) {
-  let data = vm.data
+  let data = vm.$options.data
   data = vm._data = typeof data === 'function' ? data.call(vm) : data //call修改this指向
   // debugger
   // 将data的所有属性代理到实例上去
