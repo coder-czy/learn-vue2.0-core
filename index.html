@@ -13,16 +13,6 @@
   </div>
   <script src="./dist/vue.js"></script>
   <script>
-    Vue.Mixin({
-      created: function a () {
-
-      }
-    })
-    Vue.Mixin({
-      created: function b () {
-
-      }
-    })
     // 响应式的数据变化
     const vm = new Vue({
       el: '#app',
@@ -39,13 +29,8 @@
         }
       }
     })
-    setTimeout(() => {
-      vm.msg = 'zhangshan'
-      // vm._update(vm._render())  //vm._render()获取到vm实力上的数据  vm._update更新页面
-    }, 1000)
-    // 问题自动更新
-    // 1.数据变化，自动更新视图  vm._update(vm._render())
-    // 2.vue中更新组建策略是：以组件单位，给每一组件添加一个watcher
+    console.log(vm);
+
   </script>
 </body>
 

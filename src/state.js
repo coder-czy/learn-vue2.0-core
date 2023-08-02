@@ -1,15 +1,13 @@
-import { observer } from './observe/index'
+import { observe } from './observe/observe'
 
 export function initState (vm) {
-  const ops = vm.$options
-  if (ops.data) {
-    initData(vm)
-  }
+  initData(vm)
+  console.log(vm)
 
 }
 
 function initData (vm) {
-  let data = vm.$options.data
+  let data = vm.data
   data = vm._data = typeof data === 'function' ? data.call(vm) : data //call修改this指向
   // debugger
   // 将data的所有属性代理到实例上去
@@ -18,7 +16,7 @@ function initData (vm) {
   }
 
   // 对data数据进行劫持
-  observer(data)
+  observe(data)
 
 }
 
