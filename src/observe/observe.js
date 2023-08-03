@@ -1,5 +1,5 @@
 import Observer from './observer'
-export function observe (data) {
+export default function observe (data) {
   // 判断
   if (typeof data != 'object' || data == null) return
   // 对象

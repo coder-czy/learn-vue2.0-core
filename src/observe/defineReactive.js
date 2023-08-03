@@ -1,4 +1,4 @@
-import { observe } from './observe'
+import observe from './observe'
 
 export default function defineReactive (data, key, value) {
   if (arguments.length === 2) {

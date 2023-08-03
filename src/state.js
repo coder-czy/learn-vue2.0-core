@@ -1,4 +1,4 @@
-import { observe } from './observe/observe'
+import observe from './observe/observe'
 
 export function initState (vm) {
 
