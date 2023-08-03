@@ -1,23 +1,39 @@
-import observe from './observe'
+import observe from "./observe"
 
+/**
+ * 给对象data的属性key定义监听
+ * @param {*} data 传入的数据
+ * @param {*} key 监听的属性
+ * @param {*} value 闭包环境提供的周转变量
+ */
 export default function defineReactive (data, key, value) {
+  // console.log('defineReactive()', data, key, value)
   if (arguments.length === 2) {
     value = data[key]
   }
-  let childOb = observe(data)
+
+  // 子元素要进行observe，形成递归
+  let childOb = observe(value)
+
   Object.defineProperty(data, key, {
-    configurable: true,
+    // 可枚举 可以for-in
     enumerable: true,
+    // 可被配置，比如可以被delete
+    configurable: true,
+    // getter
     get () {
-      console.log(`获取值${key}:${value}`)
+      console.log(`getter试图访问${key}属性`)
       return value
     },
+    // setter
     set (newValue) {
+      console.log(`setter试图改变${key}属性`, newValue)
       if (value === newValue) return
-      console.log(`设置值${key}:${newValue}`)
       value = newValue
-      childOb = observe(newValue)
-    }
-  })
 
+      // 当设置了新值，新值也要被observe
+      childOb = observe(newValue)
+    },
+  })
 }
+

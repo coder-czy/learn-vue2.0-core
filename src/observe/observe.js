@@ -1,14 +1,17 @@
-import Observer from './observer'
-export default function observe (data) {
-  // 判断
-  if (typeof data != 'object' || data == null) return
-  // 对象
+import Observer from "./observer"
+/**
+ * 监听 value
+ * @param {*} value 
+ * @returns 
+ */
+export default function observe (value) {
+  // 如果value不是对象，就什么都不做
+  if (typeof value != "object") return
   let ob
-  if (data.__ob__) {
-    ob = data.__ob__
+  if (typeof value.__ob__ !== "undefined") {
+    ob = value.__ob__
   } else {
-    ob = new Observer(data)
+    ob = new Observer(value)
   }
   return ob
-
 }
