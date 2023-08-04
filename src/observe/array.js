@@ -50,9 +50,13 @@ methodsNeedChange.forEach((methodName) => {
       }
 
       // 查看有没有新插入的项inserted，有的话就劫持
-      if (inserted.length) {
+      if (inserted) {
         ob.observeArray(inserted)
       }
+
+      // 发布订阅模式，通知dep
+      // 向依赖发送消息
+      ob.dep.notify()
 
       return result
     },
